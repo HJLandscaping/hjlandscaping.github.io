@@ -1,1 +1,1 @@
-// script.js content here */
+console.log('HJ Landscaping site loaded.');
