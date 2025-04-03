@@ -1,1 +1,0 @@
-Upload all files to your GitHub repository to publish your website.
