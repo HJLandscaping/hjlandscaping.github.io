@@ -1,1 +1,102 @@
-<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Design Tool</title><link rel='stylesheet' href='style.css'></head><body><header><div class='logo'>HJ Landscaping</div><nav><ul class='nav-links'><li><a href='index.html'>Home</a></li><li><a href='quote.html'>Quote</a></li><li><a href='maintenance.html'>Booking</a></li><li><a href='design.html'>Design Tool</a></li><li><a href='contact.html'>Contact</a></li></ul></nav></header><section class='hero'><h1>Garden Design Tool</h1><p>Drag & Drop elements to create your dream outdoor space</p></section><footer><p>&copy; 2025 HJ Landscaping. All Rights Reserved.</p></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HJ Landscaping | Design Tool</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #canvas { width: 100%; height: 600px; border: 2px dashed #7f8c8d; position: relative; background: #ecf0f1; border-radius: 10px; }
+    .elements { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .element { width: 80px; text-align: center; cursor: grab; background: #95a5a6; padding: 10px; border-radius: 5px; color: white; }
+    .item { position: absolute; cursor: move; width: 80px; }
+    .signup-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.95); display: flex; justify-content: center; align-items: center; flex-direction: column; }
+    .signup-overlay input { padding: 10px; margin: 10px; width: 250px; }
+    .signup-overlay button { padding: 10px 20px; background: #27ae60; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">HJ Landscaping</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quote.html">Quote</a></li>
+        <li><a href="maintenance.html">Booking</a></li>
+        <li><a href="design.html">Design Tool</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Garden Design Tool</h1>
+    <p>Create your dream outdoor space</p>
+  </section>
+
+  <section class="designer">
+    <div class="elements">
+      <div class="element" draggable="true" data-img="images/plant.png">Plant</div>
+      <div class="element" draggable="true" data-img="images/deck.png">Deck</div>
+      <div class="element" draggable="true" data-img="images/path.png">Path</div>
+      <div class="element" draggable="true" data-img="images/pool.png">Pool</div>
+      <div class="element" draggable="true" data-img="images/pergola.png">Pergola</div>
+      <div class="element" draggable="true" data-img="images/retaining-wall.png">Wall</div>
+      <div class="element" draggable="true" data-img="images/stone.png">Stone</div>
+      <div class="element" draggable="true" data-img="images/concrete.png">Concrete</div>
+    </div>
+    <div id="canvas">
+      <div class="signup-overlay" id="signup">
+        <h3>Start Designing</h3>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <button onclick="unlockDesigner()">Start</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 HJ Landscaping. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const elements = document.querySelectorAll('.element');
+    const canvas = document.getElementById('canvas');
+
+    elements.forEach(el => {
+      el.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('img', el.dataset.img);
+      });
+    });
+
+    canvas.addEventListener('dragover', e => e.preventDefault());
+
+    canvas.addEventListener('drop', e => {
+      e.preventDefault();
+      const imgSrc = e.dataTransfer.getData('img');
+      const item = document.createElement('img');
+      item.src = imgSrc;
+      item.className = 'item';
+      item.style.left = e.offsetX + 'px';
+      item.style.top = e.offsetY + 'px';
+      item.draggable = true;
+      item.addEventListener('dragstart', ev => {
+        ev.dataTransfer.setData('offsetX', ev.offsetX);
+        ev.dataTransfer.setData('offsetY', ev.offsetY);
+      });
+      canvas.appendChild(item);
+    });
+
+    function unlockDesigner() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      if (name && email) {
+        document.getElementById('signup').style.display = 'none';
+        alert('Thank you ' + name + '! You can now start designing.');
+      } else {
+        alert('Please fill in your details');
+      }
+    }
+  </script>
+</body>
+</html>
