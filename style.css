@@ -97,3 +97,13 @@ input, textarea, button {
   border-radius: 30px;
   text-decoration: none;
 }
+
+.book-btn {
+  display: inline-block;
+  background: #27ae60;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  margin-top: 10px;
+}
